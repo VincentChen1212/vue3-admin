@@ -1,0 +1,6 @@
+main.ts
+    App.vue <router-view />
+        layout/index.vue
+            Header.vue
+            SideBar.vue
+            PageMain.vue (<router-view />)
