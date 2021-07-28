@@ -6,7 +6,7 @@ const MENU_SETTING = {
 
 const LOGIN_DATA = {
   EMAIL: 'rainbow_wu@cht.com.tw',
-  PASSWORD: '`1QAZ2wsx'
+  PASSWORD: '1qaz@WSX3edc'
 };
 
 const API_CODE = {

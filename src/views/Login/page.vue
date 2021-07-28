@@ -64,7 +64,7 @@ export default defineComponent({
     const isDisabled = ref(true);
     const loginForm = reactive({
       email: 'rainbow_wu@cht.com.tw',
-      password: '`1QAZ2wsx',
+      password: '1qaz@WSX3edc',
     });
 
     const loginRules = {
