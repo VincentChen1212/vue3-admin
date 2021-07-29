@@ -12,11 +12,11 @@ export default defineComponent({
     const columnArray = [
       { prop: 'id', label: '身分證號', width: '150' },
       { prop: 'name', label: '姓名', width: '100' },
-      { prop: 'sex', label: '性別', width: '100' },
-      { prop: 'age', label: '年齡', width: '100' },
+      { prop: 'sex', label: '性別', width: '80' },
+      { prop: 'age', label: '年齡', width: '80' },
       { prop: 'married', label: '婚姻狀態', width: '100' },
-      { prop: 'height', label: '身高', width: '100' },
-      { prop: 'weight', label: '體重', width: '100' },
+      { prop: 'height', label: '身高', width: '80' },
+      { prop: 'weight', label: '體重', width: '80' },
     ];
 
     onBeforeMount(() => {
@@ -26,9 +26,9 @@ export default defineComponent({
     });
 
     const handExpandChange = (row: any, expandedRows: Array<any>) => {
-      console.log('row => ', row);
-      console.log('row type => ', row.constructor);
-      console.log('expandedRows type => ', expandedRows.constructor);
+      // console.log('row => ', row);
+      // console.log('row type => ', row.constructor);
+      // console.log('expandedRows type => ', expandedRows.constructor);
 
       const id = row.id;
       console.log('cid => ', id);
@@ -39,12 +39,12 @@ export default defineComponent({
 
       /** 目前因為不想動我測試API，所以暫時這樣處理 **/
       store.dispatch('investor/getDetail', id).then(() => {
-        const phone = invDetail.value.phone;
-        const email = invDetail.value.email;
+        const birthPlace = invDetail.value.birthPlace;
+        const name = invDetail.value.name;
 
         const config = {
-          title: '該投資者的電話/Email是：',
-          message: `${phone}/${email}`,
+          title: `該投資者 ${name} 的出生地是：`,
+          message: `${birthPlace}`,
         };
         store.dispatch('toggleDialog', {
           flag: true,
@@ -86,10 +86,18 @@ export default defineComponent({
                      align="center">
       <template #default="scope">
         <el-button @click.prevent="handDetail(scope.row.id)"
+                   size="small"
+                   plain>資訊
+        </el-button>
+        <el-button @click.prevent="handDetail(scope.row.serial)"
                    type="info"
                    size="small"
-                   plain>
-          資訊
+                   plain>編輯
+        </el-button>
+        <el-button @click.prevent="handDetail(scope.row.serial)"
+                   type="danger"
+                   size="small"
+                   plain>刪除
         </el-button>
       </template>
     </el-table-column>
