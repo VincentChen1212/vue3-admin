@@ -1,6 +1,24 @@
 import { Module } from 'vuex';
 import { apiPostInvestor, apiGetInvestorList, apiGetInvestor, apiPutInvestor, apiDeleteInvestor } from '@/api';
-import { CallAPI, tryCatch } from '@/store/helper';
+import { Modal, CallAPI, tryCatch } from '@/store/helper';
+
+// 彈跳輸入視窗
+class ModalData {
+  serial = '';
+  id = '';
+  name = '';
+  age = 0;
+  height = 0;
+  weight = 0;
+  sex = '';
+  married = false;
+  birthPlace = '';
+  title = '';
+
+  constructor(data: object = {}) {
+    Object.assign(this, data);
+  }
+}
 
 const investor: Module<any, any> = {
   namespaced: true,
@@ -10,12 +28,20 @@ const investor: Module<any, any> = {
     list: [],
 
     // 單一投資者明細
-    detail: {}
+    detail: {},
+
+    isModalShow: false,
+    modalConfig: {},
+    modalData: new ModalData()
   },
 
   getters: {
     list: state => state.list,
-    detail: state => state.detail
+    detail: state => state.detail,
+
+    isModalShow: state => state.isModalShow,
+    modalConfig: state => state.modalConfig,
+    modalData: state => state.modalData
   },
 
   actions: {
@@ -104,18 +130,42 @@ const investor: Module<any, any> = {
     // 因為會共用，所以提出來
     setList({ commit }, data) {
       commit('SET_LIST', data);
+    },
+
+    // 開啟或關閉彈跳輸入視窗
+    toggleModal({ commit }, { flag, config, data }) {
+      commit('TOGGLE_MODAL', { flag, config, data });
+    },
+
+    // 由彈跳視窗設定資料回來
+    setModalDate({ commit }, data) {
+      commit('SET_MODAL', data);
     }
   },
 
   mutations: {
     SET_LIST(state, data) {
-      state.list = data;
+      state.list = data.map((it: { [key: string]: any }) => {
+        it.sexString = it.sex === 'M' ? '男' : '女';
+        it.marriedString = it.married ? '已婚' : '未婚';
+        return it;
+      });
       console.log('investor state.list => ', state.list);
     },
 
     SET_DETAIL(state, data) {
       state.detail = data;
       console.log('investor state.detail => ', state.detail);
+    },
+
+    TOGGLE_MODAL(state, { flag, config = {}, data = {} }) {
+      state.isModalShow = flag ? true : false;
+      state.modalConfig = new Modal({ width: '50%', isCancelShow: false, ...config });
+      state.modalData = new ModalData(data);
+    },
+
+    SET_MODAL(state, data) {
+      state.modalData = new ModalData(data);
     }
   }
 };
