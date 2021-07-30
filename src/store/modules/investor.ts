@@ -1,15 +1,16 @@
 import { Module } from 'vuex';
 import { apiPostInvestor, apiGetInvestorList, apiGetInvestor, apiPutInvestor, apiDeleteInvestor } from '@/api';
 import { Modal, CallAPI, tryCatch } from '@/store/helper';
+import { v4 as uuidv4 } from 'uuid';
 
 // 彈跳輸入視窗
 class ModalData {
   serial = '';
   id = '';
   name = '';
-  age = 0;
-  height = 0;
-  weight = 0;
+  age = '';
+  height = '';
+  weight = '';
   sex = '';
   married = false;
   birthPlace = '';
@@ -50,8 +51,14 @@ const investor: Module<any, any> = {
       commit('UPDATE_LOADING', { flag: true }, { root: true });
       dispatch('setCallAPI', new CallAPI('investor/add'), { root: true });
 
+      // 微調資料
+      data.serial = uuidv4();
+      data.sex = data.id.substr(1, 1) === '1' ? 'M' : 'F';
+
+      // console.log('add data => ', data);
+
       const res = await tryCatch(apiPostInvestor)(data);
-      // console.log('getList res => ', res);
+      // console.log('add res => ', res);
 
       if (res) {
         // 原列表加入新資料
@@ -59,6 +66,8 @@ const investor: Module<any, any> = {
       }
 
       commit('UPDATE_LOADING', { flag: false }, { root: true });
+
+      dispatch('toggleModal', { flag: false }); // 關閉彈跳視窗
     },
 
     // 取得投資者列表
@@ -82,7 +91,7 @@ const investor: Module<any, any> = {
       dispatch('setCallAPI', new CallAPI('investor/getDetail'), { root: true });
 
       const res = await tryCatch(apiGetInvestor)(cid);
-      // console.log('handDetail res => ', res);
+      // console.log('getDetail res => ', res);
 
       if (res) {
         commit('SET_DETAIL', res);
@@ -97,16 +106,20 @@ const investor: Module<any, any> = {
       dispatch('setCallAPI', new CallAPI('investor/update'), { root: true });
 
       const res = await tryCatch(apiPutInvestor)(data.serial, data);
-      // console.log('getList res => ', res);
+      // console.log('update res => ', res);
 
-      if (res) {
-        // 更新列表內的資料
-        const newData = getters.list.map((item: { [key: string]: any }) => (item.serial === data.serial ? data : item));
+      // if (res) { /* 因為目前Update不會回應Body */
+      // 更新列表內的資料
+      const newData = getters.list.map((item: { [key: string]: any }) => (item.serial === data.serial ? data : item));
 
-        dispatch('setList', newData);
-      }
+      // console.log('update newData => ', newData);
+
+      dispatch('setList', newData);
+      // }
 
       commit('UPDATE_LOADING', { flag: false }, { root: true });
+
+      dispatch('toggleModal', { flag: false }); // 關閉彈跳視窗
     },
 
     // 刪除投資者
@@ -115,16 +128,19 @@ const investor: Module<any, any> = {
       dispatch('setCallAPI', new CallAPI('investor/delete'), { root: true });
 
       const res = await tryCatch(apiDeleteInvestor)(serial);
-      // console.log('getList res => ', res);
+      // console.log('delete res => ', res);
 
-      if (res) {
-        // 更新列表內的資料
-        const newData = getters.list.filter((item: { [key: string]: any }) => item.serial !== serial);
+      // if (res) { /* 因為目前Update不會回應Body */
+      // 更新列表內的資料
+      const newData = getters.list.filter((item: { [key: string]: any }) => item.serial !== serial);
 
-        dispatch('setList', newData);
-      }
+      // console.log('delete newData => ', newData);
+
+      dispatch('setList', newData);
+      // }
 
       commit('UPDATE_LOADING', { flag: false }, { root: true });
+      commit('UPDATE_DIALOG_OPEN', { flag: false }, { root: true });
     },
 
     // 因為會共用，所以提出來
@@ -144,7 +160,7 @@ const investor: Module<any, any> = {
   },
 
   mutations: {
-    SET_LIST(state, data) {
+    SET_LIST(state, data: []) {
       state.list = data.map((it: { [key: string]: any }) => {
         it.sexString = it.sex === 'M' ? '男' : '女';
         it.marriedString = it.married ? '已婚' : '未婚';
