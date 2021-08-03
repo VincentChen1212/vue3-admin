@@ -8,9 +8,9 @@ class ModalData {
   serial = '';
   id = '';
   name = '';
-  age = 0;
-  height = 0;
-  weight = 0;
+  age = null;
+  height = null;
+  weight = null;
   sex = '';
   married = false;
   birthPlace = '';
