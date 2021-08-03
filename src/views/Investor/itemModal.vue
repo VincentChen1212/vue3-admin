@@ -23,17 +23,17 @@ export default defineComponent({
 
       age: [
         { required: true, message: '請輸入年齡', trigger: 'blur' },
-        { required: true, type: 'number', pattern: '^\\d+$', message: '年齡請輸入正整數', trigger: 'blur' },
+        { required: true, type: 'integer', min: 1, message: '年齡請輸入正整數', trigger: 'blur' },
       ],
 
       height: [
         { required: true, message: '請輸入身高', trigger: 'blur' },
-        { required: true, type: 'number', pattern: '^\\d+(\\.\\d+)?$', message: '身高請輸入正整數(可包含小數)', trigger: 'blur' },
+        { required: true, type: 'number', min: 1, message: '身高請輸入正數(可包含小數)', trigger: 'blur' },
       ],
 
       weight: [
         { required: true, message: '請輸入體重', trigger: 'blur' },
-        { required: true, type: 'number', pattern: '^\\d+(\\.\\d+)?$', message: '體重請輸入正整數(可包含小數)', trigger: 'blur' },
+        { required: true, type: 'number', min: 1, message: '體重請輸入正數(可包含小數)', trigger: 'blur' },
       ],
 
       birthPlace: [{ required: true, message: '請輸入出生地', trigger: 'blur' }],
