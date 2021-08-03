@@ -23,17 +23,17 @@ export default defineComponent({
 
       age: [
         { required: true, message: '請輸入年齡', trigger: 'blur' },
-        { required: true, pattern: '^\\d*$', message: '年齡請輸入數字', trigger: 'blur' },
+        { required: true, type: 'number', pattern: '^\\d*$', message: '年齡請輸入整數' },
       ],
 
       height: [
         { required: true, message: '請輸入身高', trigger: 'blur' },
-        { required: true, pattern: '^\\d*(\\.\\d+)?$', message: '身高請輸入數字', trigger: 'blur' },
+        { required: true, type: 'number', pattern: '^\\d*(\\.\\d+)?$', message: '身高請輸入數字(可小數)' },
       ],
 
       weight: [
         { required: true, message: '請輸入體重', trigger: 'blur' },
-        { required: true, pattern: '^\\d*(\\.\\d+)?$', message: '體重請輸入數字', trigger: 'blur' },
+        { required: true, type: 'number', pattern: '^\\d*(\\.\\d+)?$', message: '體重請輸入數字(可小數)' },
       ],
 
       birthPlace: [{ required: true, message: '請輸入出生地', trigger: 'blur' }],
@@ -104,21 +104,22 @@ export default defineComponent({
         </el-form-item>
         <el-form-item prop="age"
                       label="年齡">
-          <el-input type="text"
-                    placeholder="請輸入年齡"
-                    v-model="invForm.age"></el-input>
+          <el-input placeholder="請輸入年齡"
+                    v-model.number="invForm.age"></el-input>
         </el-form-item>
         <el-form-item prop="height"
                       label="身高">
-          <el-input type="text"
+          <el-input type="number"
                     placeholder="請輸入身高"
-                    v-model="invForm.height"></el-input>
+                    v-model.number="invForm.height"
+                    class="form-control hide-arrows"></el-input>
         </el-form-item>
         <el-form-item prop="weight"
                       label="體重">
-          <el-input type="text"
+          <el-input type="number"
                     placeholder="請輸入體重"
-                    v-model="invForm.weight"></el-input>
+                    v-model.number="invForm.weight"
+                    class="form-control hide-arrows"></el-input>
         </el-form-item>
         <el-form-item prop="married"
                       label="已婚">
@@ -151,4 +152,16 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '@/style/variable.scss';
+
+/* Hide arrow buttons on number text input */
+/* Chrome, Safari, Edge, Opera */
+.hide-arrows input::-webkit-outer-spin-button,
+.hide-arrows input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.hide-arrows input[type='number'] {
+  -moz-appearance: textfield;
+}
 </style>
