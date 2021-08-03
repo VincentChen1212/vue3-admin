@@ -23,17 +23,17 @@ export default defineComponent({
 
       age: [
         { required: true, message: '請輸入年齡', trigger: 'blur' },
-        { required: true, type: 'number', pattern: '^\\d*$', message: '年齡請輸入整數' },
+        { required: true, type: 'number', pattern: '^\\d+$', message: '年齡請輸入正整數', trigger: 'blur' },
       ],
 
       height: [
         { required: true, message: '請輸入身高', trigger: 'blur' },
-        { required: true, type: 'number', pattern: '^\\d*(\\.\\d+)?$', message: '身高請輸入數字(可小數)' },
+        { required: true, type: 'number', pattern: '^\\d+(\\.\\d+)?$', message: '身高請輸入正整數(可包含小數)', trigger: 'blur' },
       ],
 
       weight: [
         { required: true, message: '請輸入體重', trigger: 'blur' },
-        { required: true, type: 'number', pattern: '^\\d*(\\.\\d+)?$', message: '體重請輸入數字(可小數)' },
+        { required: true, type: 'number', pattern: '^\\d+(\\.\\d+)?$', message: '體重請輸入正整數(可包含小數)', trigger: 'blur' },
       ],
 
       birthPlace: [{ required: true, message: '請輸入出生地', trigger: 'blur' }],
@@ -152,16 +152,4 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import '@/style/variable.scss';
-
-/* Hide arrow buttons on number text input */
-/* Chrome, Safari, Edge, Opera */
-.hide-arrows input::-webkit-outer-spin-button,
-.hide-arrows input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-/* Firefox */
-.hide-arrows input[type='number'] {
-  -moz-appearance: textfield;
-}
 </style>
