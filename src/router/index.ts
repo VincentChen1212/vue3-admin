@@ -6,6 +6,7 @@ import Home from '@/views/Home';
 import PageNotFound from '@/views/PageNotFound';
 import TodoList from '@/views/Todo/list.vue';
 import InvestorList from '@/views/Investor/list.vue';
+import Function1 from '@/views/Fun/fun1.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -33,6 +34,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'investor',
         name: 'investor',
         component: InvestorList
+      },
+      {
+        path: 'fun1',
+        name: 'fun1',
+        component: Function1
       },
       { path: '/:pathMatch(.*)*', component: PageNotFound }
     ]
