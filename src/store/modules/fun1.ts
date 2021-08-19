@@ -1,4 +1,5 @@
 import { Module } from 'vuex';
+import myJson from '@/assets/taiwan_districts.json';
 
 // 動態欄位顯示情況
 class DisplayData {
@@ -38,19 +39,37 @@ const fun1: Module<any, any> = {
     ],
 
     // 動態欄位顯示情況(if from DB)
-    displayData: new DisplayData()
+    displayData: new DisplayData(),
+
+    // 城市列表
+    cityList: [],
+
+    // 鄉鎮市區列表
+    distList: {}
   },
 
   getters: {
     investmentNo: state => state.investmentNo,
+    displayData: state => state.displayData,
 
-    displayData: state => state.displayData
+    cityList: state => state.cityList,
+    distList: state => state.distList
   },
 
   actions: {
     // 設定動態欄位
     async setupView({ commit }, data: string) {
-      commit('SETUP_VIEW', data);
+      await commit('SETUP_VIEW', data);
+    },
+
+    // 取得城市
+    async getCityList({ commit }) {
+      await commit('GET_CITY_LIST');
+    },
+
+    // 取得鄉鎮市區
+    async getDistrictList({ commit }, data) {
+      await commit('GET_DISTRICT_LIST', data);
     }
   },
 
@@ -102,6 +121,15 @@ const fun1: Module<any, any> = {
           console.log('Here Default');
           break;
       }
+    },
+
+    GET_CITY_LIST(state) {
+      state.cityList = myJson;
+    },
+
+    GET_DISTRICT_LIST(state, data: string) {
+      const _distList = myJson.filter(it => it.name === data);
+      state.distList = _distList && _distList.length > 0 ? _distList[0] : {};
     }
   }
 };
