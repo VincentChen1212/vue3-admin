@@ -37,18 +37,18 @@ export default defineComponent({
       store.dispatch('fun1/setupView', fieldSelectModel.value);
     };
 
+    // 選擇城市後，重置鄉鎮市區
+    // ref：https://developpaper.com/question/how-can-select-in-element-clear-the-previous-selection-after-the-drop-down-data-changes/
+    const resetDist = async () => {
+      linkSelectModel2.value = await '';
+    };
+
     const _showResult = () => {
       showAddress.value = `${linkSelectModel1.value} - ${linkSelectModel2.value}`;
     };
 
     const showResult = () => {
       setTimeout(_showResult, 1);
-    };
-
-    // 選擇城市後，重置鄉鎮市區
-    // ref：https://developpaper.com/question/how-can-select-in-element-clear-the-previous-selection-after-the-drop-down-data-changes/
-    const resetDist = async () => {
-      linkSelectModel2.value = await '';
     };
 
     const onLinkChange1 = () => {
@@ -58,17 +58,18 @@ export default defineComponent({
       // console.log('linkSelectModel1 => ', linkSelectModel1.value);
       // console.log('linkSelectModel2 => ', linkSelectModel2.value);
 
-      // showResult();
+      showResult();
     };
 
     const onLinkChange2 = () => {
       // console.log('linkSelectModel1 => ', linkSelectModel1.value);
       // console.log('linkSelectModel2 => ', linkSelectModel2.value);
-      // showResult();
+
+      showResult();
     };
 
     const submit = () => {
-      _showResult();
+      alert(showAddress.value);
     };
 
     return {
