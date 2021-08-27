@@ -36,3 +36,15 @@ $avatar-size: 60px;
 %page-title-style {
   font-size: 1.6em;
 }
+
+/* Hide arrow buttons on number text input */
+/* Chrome, Safari, Edge, Opera */
+.hide-arrows input::-webkit-outer-spin-button,
+.hide-arrows input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.hide-arrows input[type='number'] {
+  -moz-appearance: textfield;
+}
