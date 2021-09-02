@@ -78,6 +78,7 @@ export default defineComponent({
 
     watchEffect(() => {
       activeMenu.value = `/${route.path.split('/')[1]}`;
+      console.log('activeMenu.value => ', activeMenu.value);
     });
 
     return {

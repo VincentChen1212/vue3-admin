@@ -66,7 +66,6 @@ export default defineComponent({
       if (newChildren.length === 1 && !parent.meta) {
         childItem.value = newChildren[0];
         console.log('childItem 1', parent.meta, childItem);
-
         return true;
       }
       if (newChildren.length === 0) {
