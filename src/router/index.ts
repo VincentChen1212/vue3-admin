@@ -1,53 +1,10 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
+import routes from '@/router/modules';
 import { isAuthenticated } from '@/utils/validate';
-import Layout from '@/layout/index.vue';
-import Login from '@/views/Login';
-import Home from '@/views/Home';
-import PageNotFound from '@/views/PageNotFound';
-import TodoList from '@/views/Todo/list.vue';
-import InvestorList from '@/views/Investor/list.vue';
-import Function1 from '@/views/Fun/fun1.vue';
-
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/login',
-    name: 'login',
-    component: Login
-  },
-  {
-    path: '/',
-    name: 'index',
-    component: Layout,
-    redirect: '/home',
-    children: [
-      {
-        path: 'home',
-        name: 'home',
-        component: Home
-      },
-      {
-        path: 'todo',
-        name: 'todo',
-        component: TodoList
-      },
-      {
-        path: 'investor',
-        name: 'investor',
-        component: InvestorList
-      },
-      {
-        path: 'fun1',
-        name: 'fun1',
-        component: Function1
-      },
-      { path: '/:pathMatch(.*)*', component: PageNotFound }
-    ]
-  }
-];
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
-  routes
+  routes,
 });
 
 // router 守門員：當非 login 頁面會去檢查是否有 accessToken，沒有就導到登入頁
