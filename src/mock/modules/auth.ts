@@ -198,6 +198,30 @@ const data = {
         },
       ],
     },
+    {
+      hidden: false,
+      path: '',
+      meta: {
+        title: 'VC測試功能',
+        icon: 'el-icon-coffee',
+      },
+      children: [
+        {
+          hidden: false,
+          path: '/vc-investor',
+          meta: {
+            title: '投資人管理',
+          },
+        },
+        {
+          hidden: false,
+          path: '/vc-fun',
+          meta: {
+            title: '動態欄位/連動選單',
+          },
+        },
+      ],
+    },
   ],
 };
 
